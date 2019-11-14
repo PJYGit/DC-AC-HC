@@ -1,5 +1,5 @@
 #--------------------------
-# Your Name and ID   <--------------------- Change this -----
+# Name: Jiayao Pang ID: 194174300
 # CP460 (Fall 2019)
 # Assignment 4
 #--------------------------

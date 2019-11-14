@@ -1,13 +1,14 @@
-#--------------------------
-# Your Name and ID   <--------------------- Change this -----
+# --------------------------
+# Name: Jiayao Pang ID: 194174300
 # CP460 (Fall 2019)
 # Assignment 4
-#--------------------------
+# --------------------------
 
 import math
 import string
 
-#-----------------------------------------------------------
+
+# -----------------------------------------------------------
 # Parameters:   mod (a positive integer)
 # Return:       residueSet (list)
 # Description:  Returns set of numbers in the given mod
@@ -15,12 +16,20 @@ import string
 # Example:      residueSet for mod 5 --> [0,1,2,3,4]
 # Errors:       mod has to be positive integer
 #               return 'Error (residue_set): Invalid mod'
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def residue_set(mod):
     # your code here
-    return
+    if not isinstance(mod, int) or int(mod) <= 0:
+        return 'Error (residue_set): Invalid mod'
 
-#-----------------------------------------------------------
+    residueSet = []
+    for i in range(int(mod)):
+        residueSet.append(i);
+
+    return residueSet
+
+
+# -----------------------------------------------------------
 # Parameters:   num (any integer)
 #               mod (a positive integer)
 # Return:       residue
@@ -31,12 +40,21 @@ def residue_set(mod):
 #                   return 'Error (residue): Invalid mod'
 #               num should be integer
 #                   return 'Error (residue): Invalid num'
-#-----------------------------------------------------------
-def residue(num,mod):
+# -----------------------------------------------------------
+def residue(num, mod):
     # your code here
-    return
+    if not isinstance(mod, int) or int(mod) <= 0:
+        return 'Error (residue): Invalid mod'
+    if not isinstance(num, int):
+        return 'Error (residue): Invalid num'
 
-#-----------------------------------------------------------
+    q = math.floor(num / mod)
+    r = num - q * mod
+
+    return r
+
+
+# -----------------------------------------------------------
 # Parameters:   a (any integer)
 #               b (any integer)
 #               m (a positive integer)
@@ -49,12 +67,21 @@ def residue(num,mod):
 #                   return 'Error (is_congruent): Invalid mod'
 #               a and b should be integer
 #                   return 'Error (is_congruent): Invalid input num'
-#-----------------------------------------------------------
-def is_congruent(a,b,m):
+# -----------------------------------------------------------
+def is_congruent(a, b, m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (is_congruent): Invalid mod'
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error (is_congruent): Invalid input num'
 
-#-----------------------------------------------------------
+    if residue(a, m) == residue(b, m):
+        return True
+
+    return False
+
+
+# -----------------------------------------------------------
 # Parameters:   a (any integer)
 #               b (any integer)
 #               m (positive integer)
@@ -66,12 +93,18 @@ def is_congruent(a,b,m):
 #                   return 'Error (add): Invalid input num'
 #               m should be positive integer
 #                   return 'Error (add): Invalid mod'
-#-----------------------------------------------------------
-def add(a,b,m):
+# -----------------------------------------------------------
+def add(a, b, m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (add): Invalid mod'
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error (add): Invalid input num'
 
-#-----------------------------------------------------------
+    return residue(a + b, m)
+
+
+# -----------------------------------------------------------
 # Parameters:   a (any integer)
 #               b (any integer)
 #               m (positive integer)
@@ -83,12 +116,18 @@ def add(a,b,m):
 #                   return 'Error (sub): Invalid input num'
 #               m should be positive integer
 #                   return 'Error (sub): Invalid mod'
-#-----------------------------------------------------------
-def sub(a,b,m):
+# -----------------------------------------------------------
+def sub(a, b, m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (sub): Invalid mod'
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error (sub): Invalid input num'
 
-#-----------------------------------------------------------
+    return residue(a - b, m)
+
+
+# -----------------------------------------------------------
 # Parameters:   a (any integer)
 #               m (positive integer)
 # Return:       result (integer)
@@ -99,12 +138,20 @@ def sub(a,b,m):
 #                   return 'Error (add_inv): Invalid input num'
 #               m should be positive integer
 #                   return 'Error (add_inv): Invalid mod'
-#-----------------------------------------------------------
-def add_inv(a,m):
+# -----------------------------------------------------------
+def add_inv(a, m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (add_inv): Invalid mod'
+    if not isinstance(a, int):
+        return 'Error (add_inv): Invalid input num'
 
-#-----------------------------------------------------------
+    if residue(a, m) == 0:
+        return 0
+    return m - residue(a, m)
+
+
+# -----------------------------------------------------------
 # Parameters:   m (positive integer)
 # Return:       table (2D List)
 # Description:  Returns addition table mod m
@@ -112,25 +159,49 @@ def add_inv(a,m):
 # Example:      add table for mod 2 --> [[0,1],[1,0]]
 # Errors:       m should be positive integer
 #                   return 'Error (add_table): Invalid mod'
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def add_table(m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (add_table): Invalid mod'
 
-#-----------------------------------------------------------
+    A_table = []
+    for i in range(m):
+        row = []
+        for j in range(m):
+            row.append(residue(i + j, m))
+
+        A_table.append(row)
+
+    return A_table
+
+
+# -----------------------------------------------------------
 # Parameters:   m (positive integer)
 # Return:       table (2D List)
 # Description:  Returns subtraction table mod m
 #               element [r][c] represent r-c mod m
-# Example:      subtraction table for mod 3 --> [[[0,2,1],[1,0,2],[2,1,0]]
+# Example:      subtraction table for mod 3 --> [[0,2,1],[1,0,2],[2,1,0]]
 # Errors:       m should be positive integer
 #                   return 'Error (sub_table): Invalid mod'
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def sub_table(m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (sub_table): Invalid mod'
 
-#-----------------------------------------------------------
+    S_table = []
+    for i in range(m):
+        row = []
+        for j in range(m):
+            row.append(residue(i - j, m))
+
+        S_table.append(row)
+
+    return S_table
+
+
+# -----------------------------------------------------------
 # Parameters:   m (positive integer)
 # Return:       table (2D List)
 # Description:  Returns additive Inverse table mode m
@@ -138,12 +209,26 @@ def sub_table(m):
 # Example:      Additive Inverse table mod 5 --> [[0,1,2,3,4],[0,4,3,2,1]]
 # Errors:       m should be positive integer
 #                   return 'Error (add_inv_table): Invalid mod'
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def add_inv_table(m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (add_inv_table): Invalid mod'
 
-#-----------------------------------------------------------
+    r_set = residue_set(m)
+
+    A_I_table = []
+    A_I_table.append(r_set)
+
+    temp = []
+    for i in r_set:
+        temp.append(add_inv(i, m))
+    A_I_table.append(temp)
+
+    return A_I_table
+
+
+# -----------------------------------------------------------
 # Parameters:   a (any integer)
 #               b (any integer)
 #               m (positive integer)
@@ -155,12 +240,18 @@ def add_inv_table(m):
 #                   return 'Error (mul): Invalid input num'
 #               m should be positive integer
 #                   return 'Error (mul): Invalid mod'
-#-----------------------------------------------------------
-def mul(a,b,m):
+# -----------------------------------------------------------
+def mul(a, b, m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (mul): Invalid mod'
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error (mul): Invalid input num'
 
-#-----------------------------------------------------------
+    return residue(a * b, m)
+
+
+# -----------------------------------------------------------
 # Parameters:   m (positive integer)
 # Return:       table (2D List)
 # Description:  Returns multiplication table mod m
@@ -172,23 +263,48 @@ def mul(a,b,m):
 #                       [0, 3, 2, 1]
 # Errors:       m should be positive integer
 #                   return 'Error (mul_table): Invalid mod'
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def mul_table(m):
     # your code here
-    return
+    if not isinstance(m, int) or int(m) <= 0:
+        return 'Error (mul_table): Invalid mod'
 
-#-----------------------------------------------------------
+    M_table = []
+    for i in range(m):
+        row = []
+        for j in range(m):
+            row.append(residue(i * j, m))
+
+        M_table.append(row)
+
+    return M_table
+
+
+# -----------------------------------------------------------
 # Parameters:   n (an integer)
 # Return:       True/False
 # Description:  Returns True if n is a prime
 #               False otherwise
 # Errors        None
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def is_prime(n):
     # your code here
-    return
+    if n <= 3:
+        return n > 1
 
-#-----------------------------------------------------------
+    # all primes are equal to 6x + 1 or 6x + 5
+    if n % 6 != 1 and n % 6 != 5:
+        return False
+
+    sq_root = int(math.sqrt(n))
+    for i in range(5, sq_root + 1):
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+
+    return True
+
+
+# -----------------------------------------------------------
 # Parameters:   a (an integer)
 #               b (an integer)
 # Return:       gcd of a and b (int)
@@ -197,12 +313,27 @@ def is_prime(n):
 #               Implementation can be recursive or iterative
 # Errors:       a and b should be positive integers
 #                   return 'Error (gcd): Invalid input value'
-#-----------------------------------------------------------
-def gcd(a,b):
+# -----------------------------------------------------------
+def gcd(a, b):
     # your code here
-    return
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error (gcd): Invalid input value'
+    if a == 0 or b == 0:
+        return 'Error (gcd): Invalid input value'
+    a = abs(a)
+    b = abs(b)
+    new_a = max(a, b)
+    new_b = min(a, b)
 
-#-----------------------------------------------------------
+    while (new_b != 0):
+        temp = new_a
+        new_a = new_b
+        new_b = residue(temp, new_b)
+
+    return new_a
+
+
+# -----------------------------------------------------------
 # Parameters:   a (an integer)
 #               b (an integer)
 # Return:       True/False
@@ -210,12 +341,18 @@ def gcd(a,b):
 #               which is when gcd(a,b) equals 1
 # Errors:       a and b should be integers
 #                   return 'Error(is_relatively_prime): Invalid input num'
-#-----------------------------------------------------------
-def is_relatively_prime(a,b):
+# -----------------------------------------------------------
+def is_relatively_prime(a, b):
     # your code here
-    return
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error(is_relatively_prime): Invalid input num'
 
-#-----------------------------------------------------------
+    if gcd(a, b) == 1:
+        return True
+    return False
+
+
+# -----------------------------------------------------------
 # Parameters:   a (an integer)
 #               m (a positive integer)
 # Return:       True/False
@@ -226,12 +363,20 @@ def is_relatively_prime(a,b):
 #                   return 'Error (has_mul_inv)" Invalid input num'
 #               m should be a positive integer
 #                   return 'Error (has_mul_inv): Invalid mod'
-#-----------------------------------------------------------
-def has_mul_inv(a,m):
+# -----------------------------------------------------------
+def has_mul_inv(a, m):
     # your code here
-    return
+    if not isinstance(a, int):
+        return 'Error (has_mul_inv)" Invalid input num'
+    if not isinstance(m, int) or m <= 0:
+        return 'Error (has_mul_inv): Invalid mod'
 
-#-----------------------------------------------------------
+    if gcd(a, m) == 1:
+        return True
+    return False
+
+
+# -----------------------------------------------------------
 # Parameters:   a (an integer)
 #               b (an integer)
 # Return:       [gcd(a,b) , s , t]
@@ -240,12 +385,28 @@ def has_mul_inv(a,m):
 #               as + bt = gcd(a,b)
 # Errors:       a and b should be integers not equal to 0
 #                   return 'Error(eea): Invalid input num'
-#-----------------------------------------------------------
-def eea(a,b):
+# -----------------------------------------------------------
+def eea(a, b):
     # your code here
-    return
+    if not isinstance(a, int) or not isinstance(b, int):
+        return 'Error(eea): Invalid input num'
+    if a == 0 or b == 0:
+        return 'Error(eea): Invalid input num'
 
-#-----------------------------------------------------------
+    u = [abs(a), 1, 0]
+    v = [abs(b), 0, 1]
+    r = []
+
+    while v[0] != 0:
+        q = math.floor(u[0] / v[0])
+        r = [u[0] - q * v[0], u[1] - q * v[1], u[2] - q * v[2]]
+        u = v
+        v = r
+
+    return u
+
+
+# -----------------------------------------------------------
 # Parameters:   a (an integer)
 #               m (positive integer)
 # Return:       multiplicative inverse of a mod m
@@ -256,12 +417,22 @@ def eea(a,b):
 #                   return 'Error (mul_inv)" Invalid input num'
 #               m should be a positive integer
 #                   return 'Error (mul_inv): Invalid mod
-#-----------------------------------------------------------
-def mul_inv(a,m):
+# -----------------------------------------------------------
+def mul_inv(a, m):
     # your code here
-    return
+    if not isinstance(a, int):
+        return 'Error (mul_inv)" Invalid input num'
+    if not isinstance(m, int) or m <= 0:
+        return 'Error (mul_inv): Invalid mod'
+    if not has_mul_inv(a, m):
+        return 'NA'
 
-#-----------------------------------------------------------
+    u = eea(m, residue(a, m))
+
+    return residue(u[2], m)
+
+
+# -----------------------------------------------------------
 # Parameters:   m (positive integer)
 # Return:       table [2D list]
 # Description:  Returns multiplicative Inverse table mode m
@@ -270,77 +441,91 @@ def mul_inv(a,m):
 #                   [[0,1,2,3,4],['NA',1,3,2,4]]
 # Errors:       m should be positive integer
 #                   return 'Error (mul_inv_table): Invalid mod'
-#-----------------------------------------------------------
+# -----------------------------------------------------------
 def mul_inv_table(m):
     # your code here
-    return
+    if not isinstance(m, int) or m <= 0:
+        return 'Error (mul_inv_table): Invalid mod'
+
+    re_set = residue_set(m)
+
+    M_I_table = []
+    M_I_table.append(re_set)
+
+    temp = []
+    for i in range(m):
+        temp.append(mul_inv(i, m))
+    M_I_table.append(temp)
+
+    return M_I_table
+
 
 # ----- Testing Function -------------
 # you may use this function to test your solution locally
 def test_mod():
     print('1- Testing residue_set:')
-    print('residue_set({}) =  {}'.format(10,residue_set(10)))
-    print('residue_set({}) =   {}'.format(1,residue_set(1)))
-    print('residue_set({}) =  '.format(-5),end = '')
+    print('residue_set({}) =  {}'.format(10, residue_set(10)))
+    print('residue_set({}) =   {}'.format(1, residue_set(1)))
+    print('residue_set({}) =  '.format(-5), end='')
     print('{}'.format(residue_set(-5)))
-    print('residue_set({}) = '.format([5]),end = '')
+    print('residue_set({}) = '.format([5]), end='')
     print('{}'.format(residue_set([5])))
     print()
 
     print('2- Testing residue:')
-    print('residue({},{}) =  {}'.format(17,5,residue(17,5)))
-    print('residue({},{}) = '.format(3.4,5),end = '')
-    print('{}'.format(residue(3.4,5)))
-    print('residue({},{}) = '.format(13,-5),end = '')
-    print('{}'.format(residue(13,-5)))
+    print('residue({},{}) =  {}'.format(17, 5, residue(17, 5)))
+    print('residue({},{}) = '.format(3.4, 5), end='')
+    print('{}'.format(residue(3.4, 5)))
+    print('residue({},{}) = '.format(13, -5), end='')
+    print('{}'.format(residue(13, -5)))
     print()
 
     print('3- Testing is_congruent:')
-    print('is_congruent({},{},{})= {}'.format(22,33,11,is_congruent(22,33,11)))
-    print('is_congruent({},{},{}) =   {}'.format(7,9,3,is_congruent(7,9,3)))
-    print('is_congruent({},{},{})=  '.format(3.4,5,9),end = '')
-    print('{}'.format(is_congruent(3.4,5,9)))
-    print('is_congruent({},{},{}) =  '.format(3,5,-9),end = '')
-    print('{}'.format(is_congruent(3,5,-9)))
+    print('is_congruent({},{},{})= {}'.format(22, 33, 11, is_congruent(22, 33, 11)))
+    print('is_congruent({},{},{}) =   {}'.format(7, 9, 3, is_congruent(7, 9, 3)))
+    print('is_congruent({},{},{})=  '.format(3.4, 5, 9), end='')
+    print('{}'.format(is_congruent(3.4, 5, 9)))
+    print('is_congruent({},{},{}) =  '.format(3, 5, -9), end='')
+    print('{}'.format(is_congruent(3, 5, -9)))
     print()
 
     print('4- Testing add:')
-    print('add({},{},{}) =  {}'.format(17,23,7,add(17,23,7)))
-    print('add({},{},{}) = {}'.format(-17,23,7,add(-17,23,7)))
-    print('add({},{},{}) = {}'.format(17,-23,7,add(17,-23,7)))
-    print('add({},{},{}) =   '.format(9,17,0),end = '')
-    print('{}'.format(add(9,17,0)))
-    print('add({},{},{}) = '.format([9],17,7),end = '')
-    print('{}'.format(add([9],17,7)))
-    print('add({},{},{}) = '.format(9,17.1,8),end = '')
-    print('{}'.format(add(9,17.1,8)))
+    print('add({},{},{}) =  {}'.format(17, 23, 7, add(17, 23, 7)))
+    print('add({},{},{}) = {}'.format(-17, 23, 7, add(-17, 23, 7)))
+    print('add({},{},{}) = {}'.format(17, -23, 7, add(17, -23, 7)))
+    print('add({},{},{}) =   '.format(9, 17, 0), end='')
+    print('{}'.format(add(9, 17, 0)))
+    print('add({},{},{}) = '.format([9], 17, 7), end='')
+    print('{}'.format(add([9], 17, 7)))
+    print('add({},{},{}) = '.format(9, 17.1, 8), end='')
+    print('{}'.format(add(9, 17.1, 8)))
     print()
 
     print('5- Testing sub:')
-    print('sub({},{},{}) =  {}'.format(17,23,7,sub(17,23,7)))
-    print('sub({},{},{}) = {}'.format(-17,23,7,sub(-17,23,7)))
-    print('sub({},{},{}) = {}'.format(17,-23,7,sub(17,-23,7)))
-    print('sub({},{},{}) =   '.format(9,17,0),end = '')
-    print('{}'.format(sub(9,17,0)))
-    print('sub({},{},{}) = '.format([9],17,7),end = '')
-    print('{}'.format(sub([9],17,7)))
-    print('sub({},{},{}) = '.format(9,17.1,8),end = '')
-    print('{}'.format(sub(9,17.1,8)))
+    print('sub({},{},{}) =  {}'.format(17, 23, 7, sub(17, 23, 7)))
+    print('sub({},{},{}) = {}'.format(-17, 23, 7, sub(-17, 23, 7)))
+    print('sub({},{},{}) = {}'.format(17, -23, 7, sub(17, -23, 7)))
+    print('sub({},{},{}) =   '.format(9, 17, 0), end='')
+    print('{}'.format(sub(9, 17, 0)))
+    print('sub({},{},{}) = '.format([9], 17, 7), end='')
+    print('{}'.format(sub([9], 17, 7)))
+    print('sub({},{},{}) = '.format(9, 17.1, 8), end='')
+    print('{}'.format(sub(9, 17.1, 8)))
     print()
 
     print('6- Testing additive inverse:')
-    print('add_inv({},{}) =   {}'.format(3,5,add_inv(3,5)))
-    print('add_inv({},{}) =   {}'.format(6,1,add_inv(6,1)))
-    print('add_inv({},{})=  {}'.format(22,10,add_inv(22,10)))
-    print('add_inv({},{}) =  '.format(6,-1),end= '')
-    print('{}'.format(add_inv(6,-1)))
-    print('add_inv({},{}) = '.format(6.2,6),end= '')
-    print('{}'.format(add_inv(6.2,6)))
+    print('add_inv({},{}) =   {}'.format(3, 5, add_inv(3, 5)))
+    print('add_inv({},{}) =   {}'.format(6, 1, add_inv(6, 1)))
+    print('add_inv({},{})=  {}'.format(22, 10, add_inv(22, 10)))
+    print('add_inv({},{}) =  '.format(6, -1), end='')
+    print('{}'.format(add_inv(6, -1)))
+    print('add_inv({},{}) = '.format(6.2, 6), end='')
+    print('{}'.format(add_inv(6.2, 6)))
     a = 4
     b = 2
     m = 5
-    result = sub(a,b,m) == add(a,add_inv(b,m),m)
-    print('sub({0},{1},{2}) == add({0},add_inv({1},{2}),{2})? = {3}'.format(a,b,m,result))
+    result = sub(a, b, m) == add(a, add_inv(b, m), m)
+    print('sub({0},{1},{2}) == add({0},add_inv({1},{2}),{2})? = {3}'.format(a, b, m, result))
     print()
 
     print('7- Testing Addition Table:')
@@ -353,7 +538,7 @@ def test_mod():
     for i in range(len(addTab)):
         print(addTab[i])
     print('Addition Table for mode {} ='.format(0))
-    add_table(0)
+    print(add_table(0))
     print()
     print()
 
@@ -367,10 +552,10 @@ def test_mod():
     for i in range(len(subTab)):
         print(subTab[i])
     print('Subtraction Table for mode {} ='.format([5]))
-    sub_table([5])
+    print(sub_table([5]))
     print()
     print()
-    
+
     print('9- Testing Addition Inverse Table:')
     print('Addition Inverse Table for mode {} ='.format(5))
     addInvTab = add_inv_table(5)
@@ -381,20 +566,20 @@ def test_mod():
     print(addInvTab[0])
     print(addInvTab[1])
     print('Addition Inverse Table for mode {} ='.format(-2))
-    add_inv_table(-2)
+    print(add_inv_table(-2))
     print()
     print()
 
     print('10- Testing mul:')
-    print('mul({},{},{}) =    {}'.format(3,5,5,mul(3,5,5)))
-    print('mul({},{},{}) =    {}'.format(8,3,7,mul(8,3,7)))
-    print('mul({},{},{})=   {}'.format(17,-3,7,mul(17,-3,7)))
-    print('mul({},{},{}) =   '.format(9,17,0),end = '')
-    print('{}'.format(mul(9,17,0)))
-    print('mul({},{},{}) = '.format([9],17,7),end = '')
-    print('{}'.format(mul([9],17,7)))
-    print('mul({},{},{}) = '.format(9,17.1,8),end = '')
-    print('{}'.format(mul(9,17.1,8)))
+    print('mul({},{},{}) =    {}'.format(3, 5, 5, mul(3, 5, 5)))
+    print('mul({},{},{}) =    {}'.format(8, 3, 7, mul(8, 3, 7)))
+    print('mul({},{},{})=   {}'.format(17, -3, 7, mul(17, -3, 7)))
+    print('mul({},{},{}) =   '.format(9, 17, 0), end='')
+    print('{}'.format(mul(9, 17, 0)))
+    print('mul({},{},{}) = '.format([9], 17, 7), end='')
+    print('{}'.format(mul([9], 17, 7)))
+    print('mul({},{},{}) = '.format(9, 17.1, 8), end='')
+    print('{}'.format(mul(9, 17.1, 8)))
     print()
 
     print('11- Testing Multiplication Table:')
@@ -407,69 +592,69 @@ def test_mod():
     for i in range(len(mulTab)):
         print(mulTab[i])
     print('Multiplication Table for mode {} ='.format(-5))
-    mul_table(-5)
+    print(mul_table(-5))
     print()
     print()
 
     print('12- Testing is_prime:')
-    print('is_prime({}) =  {}'.format(97,is_prime(97)))
-    print('is_prime({}) = {}'.format(479,is_prime(479)))
-    print('is_prime({})= {}'.format(1044,is_prime(1044)))
-    print('is_prime({}) =   {}'.format(0,is_prime(0)))
-    print('is_prime({}) = {}'.format(-17,is_prime(-17)))
+    print('is_prime({}) =  {}'.format(97, is_prime(97)))
+    print('is_prime({}) = {}'.format(479, is_prime(479)))
+    print('is_prime({})= {}'.format(1044, is_prime(1044)))
+    print('is_prime({}) =   {}'.format(0, is_prime(0)))
+    print('is_prime({}) = {}'.format(-17, is_prime(-17)))
     print()
 
     print('13- Testing gcd:')
-    print('gcd({},{}) =  {}'.format(629,357,gcd(629,357)))
-    print('gcd({},{}) =  {}'.format(440,700,gcd(440,700)))
-    print('gcd({},{}) =  {}'.format(-30,700,gcd(-30,700)))
-    print('gcd({},{}) = {}'.format(540,-539,gcd(540,-539)))
-    print('gcd({},{})   = '.format(711,0),end=' ')
-    print(gcd(711,0))
-    print('gcd({},{})   = '.format(0,311),end=' ')
-    print(gcd(0,311))
-    print('gcd({},{})  = '.format([9],27),end=' ')
-    print(gcd([9],27))
+    print('gcd({},{}) =  {}'.format(629, 357, gcd(629, 357)))
+    print('gcd({},{}) =  {}'.format(440, 700, gcd(440, 700)))
+    print('gcd({},{}) =  {}'.format(-30, 700, gcd(-30, 700)))
+    print('gcd({},{}) = {}'.format(540, -539, gcd(540, -539)))
+    print('gcd({},{})   = '.format(711, 0), end=' ')
+    print(gcd(711, 0))
+    print('gcd({},{})   = '.format(0, 311), end=' ')
+    print(gcd(0, 311))
+    print('gcd({},{})  = '.format([9], 27), end=' ')
+    print(gcd([9], 27))
     print()
-    
+
     print('14- Testing is_relatively_prime:')
-    print('is_relatively_prime({},{}) =     {}'.format(4,5,is_relatively_prime(4,5)))
-    print('is_relatively_prime({},{})=  {}'.format(540,539,is_relatively_prime(540,539)))
-    print('is_relatively_prime({},{}) =   {}'.format(18,26,is_relatively_prime(18,26)))
-    print('is_relatively_prime({},{}) =    {}'.format(0,26,is_relatively_prime(0,26)))
-    print('is_relatively_prime({},{}) ='.format([1],26),end= '  ')
-    print(is_relatively_prime([1],26))
+    print('is_relatively_prime({},{}) =     {}'.format(4, 5, is_relatively_prime(4, 5)))
+    print('is_relatively_prime({},{})=  {}'.format(540, 539, is_relatively_prime(540, 539)))
+    print('is_relatively_prime({},{}) =   {}'.format(18, 26, is_relatively_prime(18, 26)))
+    print('is_relatively_prime({},{}) =    {}'.format(0, 26, is_relatively_prime(0, 26)))
+    print('is_relatively_prime({},{}) ='.format([1], 26), end='  ')
+    print(is_relatively_prime([1], 26))
     print()
 
     print('15- Testing has_mul_inv:')
-    print('has_mul_inv({},{}) =     {}'.format(4,5,has_mul_inv(4,5)))
-    print('has_mul_inv({},{}) =   {}'.format(17,26,has_mul_inv(17,26)))
-    print('has_mul_inv({},{}) =   {}'.format(18,26,has_mul_inv(18,26)))
-    print('has_mul_inv({},{}) =    {}'.format(0,26,has_mul_inv(0,26)))
-    print('has_mul_inv({},{}) ='.format([1],26),end= '  ')
-    print(has_mul_inv([1],26))
+    print('has_mul_inv({},{}) =     {}'.format(4, 5, has_mul_inv(4, 5)))
+    print('has_mul_inv({},{}) =   {}'.format(17, 26, has_mul_inv(17, 26)))
+    print('has_mul_inv({},{}) =   {}'.format(18, 26, has_mul_inv(18, 26)))
+    print('has_mul_inv({},{}) =    {}'.format(0, 26, has_mul_inv(0, 26)))
+    print('has_mul_inv({},{}) ='.format([1], 26), end='  ')
+    print(has_mul_inv([1], 26))
     print()
 
     print('16- Testing EEA:')
-    print('eea({},{}) =   {}'.format(700,440,eea(700,440)))
-    print('eea({},{}) =     {}'.format(88,35,eea(88,35)))
-    print('eea({},{}) =     {}'.format(35,88,eea(35,88)))
-    print('eea({},{}) =    {}'.format(-88,35,eea(-88,35)))
-    print('eea({},{}) =    {}'.format(88,-35,eea(88,-35)))
-    print('eea({},{}) =     '.format(0,777),end = '')
-    print(eea(0,777))
+    print('eea({},{}) =   {}'.format(700, 440, eea(700, 440)))
+    print('eea({},{}) =     {}'.format(88, 35, eea(88, 35)))
+    print('eea({},{}) =     {}'.format(35, 88, eea(35, 88)))
+    print('eea({},{}) =    {}'.format(-88, 35, eea(-88, 35)))
+    print('eea({},{}) =    {}'.format(88, -35, eea(88, -35)))
+    print('eea({},{}) =     '.format(0, 777), end='')
+    print(eea(0, 777))
     print()
 
     print('17- Testing mul_inv:')
-    print('mul_inv({},{}) =   {}'.format(23,26,mul_inv(23,26)))
-    print('mul_inv({},{}) =     {}'.format(5,6,mul_inv(5,6)))
-    print('mul_inv({},{}) =   {}'.format(24,26,mul_inv(24,26)))
-    print('mul_inv({},{}) = {}'.format(700,440,mul_inv(700,440)))
-    print('mul_inv({},{}) =   {}'.format(0,777,mul_inv(700,440)))
-    print('mul_inv({},{}) =  '.format(1,[99]),end = '')
-    print(mul_inv(1,[99]))
-    print('mul_inv({},{}) =  '.format([1],99),end = '')
-    print(mul_inv([1],99))
+    print('mul_inv({},{}) =   {}'.format(23, 26, mul_inv(23, 26)))
+    print('mul_inv({},{}) =     {}'.format(5, 6, mul_inv(5, 6)))
+    print('mul_inv({},{}) =   {}'.format(24, 26, mul_inv(24, 26)))
+    print('mul_inv({},{}) = {}'.format(700, 440, mul_inv(700, 440)))
+    print('mul_inv({},{}) =   {}'.format(0, 777, mul_inv(700, 440)))
+    print('mul_inv({},{}) =  '.format(1, [99]), end='')
+    print(mul_inv(1, [99]))
+    print('mul_inv({},{}) =  '.format([1], 99), end='')
+    print(mul_inv([1], 99))
     print()
 
     print('18- Testing Multiplicative Inverse Table:')
@@ -482,9 +667,7 @@ def test_mod():
     print(mulInvTab[0])
     print(mulInvTab[1])
     print('Multiplicative Inverse Table for mode {} ='.format(-2))
-    mul_inv_table(-2)
+    print(mul_inv_table(-2))
     print()
     print()
     return
-
-          
