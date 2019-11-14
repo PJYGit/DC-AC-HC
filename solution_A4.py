@@ -117,31 +117,25 @@ def cryptanalysis_decimation(ciphertext):
     dictList = utilities_A4.load_dictionary('engmix.txt')
 
     sub_baseString = []
-    for j in range(length):
-        for k in range(length - j):
-            sub_baseString.append(baseString[k:k + j + 1])
+    for j in range(25, length):
+        sub_baseString.append(baseString[:j + 1])
 
     attempts = 0
-    for i in range(1, length + 1):
-        now_string = []
-        for s in sub_baseString:
-            if len(s) == i:
-                now_string.append(s)
+    for n_s in sub_baseString:
+        m_i_table = mod.mul_inv_table(len(n_s))
 
-        m_i_table = mod.mul_inv_table(i)
+        for mi in m_i_table[0]:
 
-        for mi in m_i_table[1]:
-            if mi != 'NA' and int(mi) >= 1:
-                for n_s in now_string:
-                    plaintext = d_decimation(ciphertext, (n_s, mi))
-                    attempts += 1
+            if m_i_table[1][mi] != 'NA':
+                plaintext = d_decimation(ciphertext, (n_s, mi))
+                attempts += 1
 
-                    if len(utilities_A4.remove_nonalpha(plaintext)) < len(plaintext) / 2:
-                        continue
+                if len(utilities_A4.remove_nonalpha(plaintext)) < len(plaintext) / 2:
+                    continue
 
-                    if utilities_A4.is_plaintext(plaintext, dictList, 0.90):
-                        print('key found after ' + str(attempts) + ' attempts')
-                        return plaintext, (n_s, mi)
+                if utilities_A4.is_plaintext(plaintext, dictList, 0.90):
+                    print('key found after ' + str(attempts) + ' attempts')
+                    return plaintext, (n_s, mi)
 
     return '', ''
 
@@ -248,6 +242,33 @@ def d_affine(ciphertext, key):
 # -----------------------------------------------------------
 def cryptanalysis_affine(ciphertext):
     # your code here
+    baseString = utilities_A4.get_baseString()
+    length = len(baseString)
+    dictList = utilities_A4.load_dictionary('engmix.txt')
+
+    sub_baseString = []
+    for j in range(25, length):
+        sub_baseString.append(baseString[:j + 1])
+
+    attempts = 0
+    for n_s in sub_baseString:
+        m_i_table = mod.mul_inv_table(len(n_s))
+
+        for mi in m_i_table[0]:
+            if m_i_table[1][mi] != 'NA':
+                for beta in range(len(n_s)):
+                    k = [mi, beta]
+                    key = (n_s, k)
+                    plaintext = d_affine(ciphertext, key)
+                    attempts += 1
+
+                    if len(utilities_A4.remove_nonalpha(plaintext)) < len(plaintext) / 2:
+                        continue
+
+                    if utilities_A4.is_plaintext(plaintext, dictList, 0.90):
+                        print('key found after ' + str(attempts) + ' attempts')
+                        return plaintext, key
+
     return '', ''
 
 
