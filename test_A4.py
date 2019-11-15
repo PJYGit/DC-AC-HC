@@ -431,6 +431,7 @@ def test_q4():
     outFile.write('is_matrix({}) =  {}\n'.format(A,matrix.is_matrix(A)))
     outFile.write('\n')
 
+
     print('3- Testing print_matrix')
     A = []
     print('print_matrix({})='.format(A))
@@ -448,7 +449,7 @@ def test_q4():
     print('print_matrix({})='.format(A))
     print(matrix.print_matrix(A))
     print()
-    
+
     outFile.write('4/5/6- Testing size functions\n')
     A = []
     outFile.write('get_rowCount({})    =  {}\n'.format(A,matrix.get_rowCount(A)))
@@ -567,7 +568,7 @@ def test_q4():
     A = [[1,0],[0,1,0]]
     outFile.write('is_identity({}) = {}\n'.format(A,matrix.is_identity(A)))
     outFile.write('\n')
-
+    
     outFile.write('14- Testing scalar_mul\n')
     A = [[1,2],[3,4]]
     c = 10
@@ -661,7 +662,7 @@ def test_q4():
     A = [[1,2,3],[4,5]]
     m = 7
     outFile.write('inverse({},{})= {}\n'.format(A,m,matrix.inverse(A,m)))
-    
+
     outFile.close()
     print('Comparing q4_solution with q4_sample:')
     print(utilities_A4.compare_files('q4_solution.txt','q4_sample.txt'))
@@ -690,4 +691,4 @@ def test_q5():
 
     print("-------------------------------------------")
 
-test_q3()
+test_q4()
