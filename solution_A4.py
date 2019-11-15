@@ -298,6 +298,53 @@ def cryptanalysis_affine(ciphertext):
 # -----------------------------------------------------------
 def e_hill(plaintext, key):
     # your code here
+    if len(plaintext) == 0:
+        print('Error(e_hill): invalid plaintext')
+        return ''
+
+    new_key = ''
+    if len(key) > 4:
+        new_key += key[:4]
+    elif len(key) == 4:
+        new_key += key
+    else:
+        new_key += key
+        counter = 0
+        while len(new_key) < 4:
+            new_key += key[counter]
+            counter += 1
+
+    baseString = utilities_A4.get_lower()
+
+    key_matrix = matrix.new_matrix(2, 2, 0)
+    count = 0
+    for i in range(2):
+        for j in range(2):
+            key_matrix[i][j] = baseString.index(new_key[count].lower())
+            count += 1
+
+    if mod.gcd(matrix.det(key_matrix), 26) != 1:
+        print('Error(e_hill): key is not invertible')
+        return ''
+
+    ciphertext = ''
+    non_alpha = utilities_A4.get_nonalpha(plaintext)
+    blocks = utilities_A4.text_to_blocks(utilities_A4.remove_nonalpha(plaintext), 2)
+    while len(blocks[-1]) != 2:
+        blocks[-1] += 'Q'
+
+    for block in blocks:
+        block_m = matrix.new_matrix(2, 1, 0)
+        block_m[0][0] = baseString.index(block[0].lower())
+        block_m[1][0] = baseString.index(block[1].lower())
+
+        result_m = matrix.matrix_mod(matrix.mul(key_matrix, block_m), 26)
+
+        ciphertext += baseString[result_m[0][0]].upper()
+        ciphertext += baseString[result_m[1][0]].upper()
+
+    ciphertext = utilities_A4.insert_nonalpha(ciphertext, non_alpha)
+
     return ciphertext
 
 
@@ -317,4 +364,53 @@ def e_hill(plaintext, key):
 # -----------------------------------------------------------
 def d_hill(ciphertext, key):
     # your code here
+    if len(ciphertext) == 0:
+        print('Error(d_hill): invalid ciphertext')
+        return ''
+
+    new_key = ''
+    if len(key) > 4:
+        new_key += key[:4]
+    elif len(key) == 4:
+        new_key += key
+    else:
+        new_key += key
+        counter = 0
+        while len(new_key) < 4:
+            new_key += key[counter]
+            counter += 1
+
+    baseString = utilities_A4.get_lower()
+
+    key_matrix = matrix.new_matrix(2, 2, 0)
+    count = 0
+    for i in range(2):
+        for j in range(2):
+            key_matrix[i][j] = baseString.index(new_key[count].lower())
+            count += 1
+
+    if mod.gcd(matrix.det(key_matrix), 26) != 1:
+        print('Error(d_hill): key is not invertible')
+        return ''
+
+    inverse_key_matrix = matrix.inverse(key_matrix, 26)
+
+    plaintext = ''
+    non_alpha = utilities_A4.get_nonalpha(ciphertext)
+    blocks = utilities_A4.text_to_blocks(utilities_A4.remove_nonalpha(ciphertext), 2)
+
+    for block in blocks:
+        block_m = matrix.new_matrix(2, 1, 0)
+        block_m[0][0] = baseString.index(block[0].lower())
+        block_m[1][0] = baseString.index(block[1].lower())
+
+        result_m = matrix.matrix_mod(matrix.mul(inverse_key_matrix, block_m), 26)
+
+        plaintext += baseString[result_m[0][0]].lower()
+        plaintext += baseString[result_m[1][0]].lower()
+
+    plaintext = utilities_A4.insert_nonalpha(plaintext, non_alpha)
+    while plaintext[-1] == 'q':
+        plaintext = plaintext[:-1]
+
     return plaintext
