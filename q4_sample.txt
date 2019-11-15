@@ -91,7 +91,7 @@ is_identity([[1, 0], [1, 1]]) = False
 is_identity([[1, 0], [0, 1, 0]]) = False
 
 14- Testing scalar_mul
-scalar_mul([[10, 20], [30, 40]],10) = [[10, 20], [30, 40]]
+scalar_mul([[1, 2], [3, 4]],10) = [[10, 20], [30, 40]]
 scalar_mul([1, 2, 3, 4],10) = [10, 20, 30, 40]
 scalar_mul([],10) = Error(scalar_mul): invalid input
 scalar_mul([1, 2, 3, [4]],10) = Error(scalar_mul): invalid input
